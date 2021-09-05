@@ -28,8 +28,7 @@ class App extends Component {
     });
      } 
     catch(err) {
-alert("aaaaa")    }
-    console.log(this.state.locationData);
+alert("error: Unable to geocode")    }
   }
 
   render(){
