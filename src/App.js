@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React , {Component} from "react";
+import CityForm from "./components/CityForm"
+import CityList from "./components/CityList";
+import axios from "axios";
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      locationData:{},
+      locationName:''
+    }
+  }
+  handelLocationNameChange=(e)=>{
+    this.setState({
+      locationName:e.target.value
+    })
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  }
+  handelSubmit = async (e) => {
+
+    e.preventDefault();
+    try{
+    const url = `https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_IQ_KEY}&q=${this.state.locationName}&format=json`;
+
+    const response = await axios.get(url);
+    this.setState({
+      locationData: response.data[0]
+    });
+     } 
+    catch(err) {
+alert("aaaaa")    }
+    console.log(this.state.locationData);
+  }
+
+  render(){
+    return(
+      <div>
+      <CityForm handelLocationNameChange={this.handelLocationNameChange} handelSubmit={this.handelSubmit}/>
+      <CityList locationData={this.state.locationData} />
+      </div>
+    )
+  }
 }
-
 export default App;
