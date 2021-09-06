@@ -17,7 +17,7 @@ class CityForm extends Component {
           <Form.Control type="text" placeholder="Enter city" onChange={this.props.handelLocationNameChange} />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Submit
+          Explore
         </Button>
       </Form>
     )
