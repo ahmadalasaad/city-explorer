@@ -4,7 +4,6 @@ import CityList from "./components/CityList";
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 class App extends Component {
   constructor(props){
     super(props);
@@ -13,7 +12,8 @@ class App extends Component {
       locationName:'',
       showMap:false,
       showAlert:false,
-      errMessage:''
+      errMessage:'',
+      WeatherForcast:[]
     }
   }
   handelLocationNameChange=(e)=>{
@@ -28,14 +28,18 @@ class App extends Component {
     try{
     const url = `https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_IQ_KEY}&q=${this.state.locationName}&format=json`;
 
+    const serverUrl=`${process.env.REACT_APP_SERVER_URL}/weather?city_name=${this.state.locationName}`;
+
     const response = await axios.get(url);
+    const serverResponse = await axios.get(serverUrl);
     this.setState({
       locationData: response.data[0],
       showMap:true,
       showAlert:false,
-      errMessage:''
-      
+      errMessage:'',
+      WeatherForcast:serverResponse.data
     });
+    console.log(this.state.WeatherForcast);
      } 
     catch(err) { 
 this.setState({
@@ -57,7 +61,7 @@ errMessage:err.message
       <CityForm handelLocationNameChange={this.handelLocationNameChange} handelSubmit={this.handelSubmit}/>
       {
         this.state.showMap &&
-      <CityList locationData={this.state.locationData} />
+      <CityList locationData={this.state.locationData} WeatherForcast={this.state.WeatherForcast} />
       }
       </div>
     )
