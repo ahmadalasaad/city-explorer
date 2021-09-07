@@ -14,7 +14,7 @@ class CityForm extends Component {
     return(
         <Form  onSubmit={this.props.handelSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control type="text" placeholder="Enter city" onChange={this.props.handelLocationNameChange} />
+          <Form.Control name='city' type="text" placeholder="Enter city"  />
         </Form.Group>
         <Button variant="primary" type="submit">
           Explore
@@ -24,3 +24,4 @@ class CityForm extends Component {
   }
 }
 export default CityForm;
+// onChange={this.props.handelLocationNameChange}
