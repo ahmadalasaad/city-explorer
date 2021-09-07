@@ -16,40 +16,42 @@ class App extends Component {
       WeatherForcast:[]
     }
   }
-  handelLocationNameChange=(e)=>{
-    this.setState({
-      locationName:e.target.value
-    })
+  // handelLocationNameChange=(e)=>{
+  //   this.setState({
+  //     locationName:e.target.value
+  //   })
 
-  }
+  // }
   handelSubmit = async (e) => {
 
     e.preventDefault();
     try{
-    const url = `https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_IQ_KEY}&q=${this.state.locationName}&format=json`;
-
-    const serverUrl=`${process.env.REACT_APP_SERVER_URL}/weather?city_name=${this.state.locationName}`;
-
+    const url = `https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_IQ_KEY}&q=${e.target.city.value}&format=json`;
+    
     const response = await axios.get(url);
-    const serverResponse = await axios.get(serverUrl);
-    this.setState({
+     this.setState({
       locationData: response.data[0],
       showMap:true,
       showAlert:false,
       errMessage:'',
-      WeatherForcast:serverResponse.data
     });
-    console.log(this.state.WeatherForcast);
-     } 
-    catch(err) { 
-this.setState({
-showMap:false,
-showAlert:true,
-errMessage:err.message
-})}
+    
+        const serverUrl=`${process.env.REACT_APP_SERVER_URL}/weather?lon=${this.state.locationData.lon}&lat=${this.state.locationData.lat}`;
+      const serverResponse = await axios.get(serverUrl);
+      this.setState({    
+        WeatherForcast:serverResponse.data
+      })
+  } 
+  catch(err) { 
+    this.setState({
+      showMap:false,
+      showAlert:true,
+      errMessage:err.message
+    })}
   }
+  
 
-  render(){
+render(){
     return(
       <div>
         {
@@ -59,11 +61,10 @@ errMessage:err.message
   </Alert>
         }
       <CityForm handelLocationNameChange={this.handelLocationNameChange} handelSubmit={this.handelSubmit}/>
-      {
+       {
         this.state.showMap &&
-      <CityList locationData={this.state.locationData} WeatherForcast={this.state.WeatherForcast} />
-      }
-      </div>
+      <CityList locationData={this.state.locationData} WeatherForcast={this.state.WeatherForcast} /> 
+    }       </div>
     )
   }
 }
