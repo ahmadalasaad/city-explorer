@@ -4,6 +4,7 @@ import CityList from "./components/CityList";
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CityMovie from "./components/CityMovie";
 class App extends Component {
   constructor(props){
     super(props);
@@ -13,7 +14,8 @@ class App extends Component {
       showMap:false,
       showAlert:false,
       errMessage:'',
-      WeatherForcast:[]
+      WeatherForcast:[],
+      MoviesList:[]
     }
   }
   // handelLocationNameChange=(e)=>{
@@ -29,7 +31,7 @@ class App extends Component {
     const url = `https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_IQ_KEY}&q=${e.target.city.value}&format=json`;
     
     const response = await axios.get(url);
-     this.setState({
+       await this.setState({
       locationData: response.data[0],
       showMap:true,
       showAlert:false,
@@ -38,9 +40,17 @@ class App extends Component {
     
         const serverUrl=`${process.env.REACT_APP_SERVER_URL}/weather?lon=${this.state.locationData.lon}&lat=${this.state.locationData.lat}`;
       const serverResponse = await axios.get(serverUrl);
+
+      const serverUrlMov=`${process.env.REACT_APP_SERVER_URL}/movies?query=${e.target.city.value}`;
+      const serverResponseMov = await axios.get(serverUrlMov);
+
       this.setState({    
-        WeatherForcast:serverResponse.data
+        WeatherForcast:serverResponse.data,
+        MoviesList:serverResponseMov.data
       })
+      console.log(this.state.MoviesList);
+      
+      
   } 
   catch(err) { 
     this.setState({
@@ -64,8 +74,12 @@ render(){
        {
         this.state.showMap &&
       <CityList locationData={this.state.locationData} WeatherForcast={this.state.WeatherForcast} /> 
-    }       </div>
+    }
+    <CityMovie MoviesList={this.state.MoviesList}/>
+     </div>
     )
   }
 }
 export default App;
+
+//http://localhost:3002/movies?query=amman
