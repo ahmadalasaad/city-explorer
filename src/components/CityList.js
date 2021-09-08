@@ -10,7 +10,6 @@ class CityList extends Component {
     let newArr=this.props.WeatherForcast.map(item=>{
       return <p>{item.date}:{item.describtion}</p>
     })
-    console.log(this.props.WeatherForcast)
     return(
     <Card style={{ width: '18rem' }}>
   <Card.Img variant="top" src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_IQ_KEY}&center=${this.props.locationData.lat},${this.props.locationData.lon}&zoom=18&size=600x600&format=png&maptype=roadmap&markers=icon:<icon>|${this.props.locationData.lat},${this.props.locationData.lon}&markers=icon:small-red-blank|${this.props.locationData.lat},${this.props.locationData.lon}`} alt='' />
