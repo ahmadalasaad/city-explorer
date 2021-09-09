@@ -23,7 +23,7 @@ class App extends Component {
   //     locationName:e.target.value
   //   })
 
-  // }
+  // } 
   handelSubmit = async (e) => {
 
     e.preventDefault();
