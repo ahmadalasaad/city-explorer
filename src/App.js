@@ -37,7 +37,6 @@ class App extends Component {
       showAlert:false,
       errMessage:'',
     });
-    
         const serverUrl=`${process.env.REACT_APP_SERVER_URL}/weather?lon=${this.state.locationData.lon}&lat=${this.state.locationData.lat}`;
       const serverResponse = await axios.get(serverUrl);
 
