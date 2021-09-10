@@ -5,9 +5,29 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url(https://www.securityroundtable.org/wp-content/uploads/2018/07/AdobeStock_103287945.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  margin: 0 auto;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+form{
+  margin-top: 5%;
+  width: 60%;
+  margin-left: 20%;
+  margin-bottom: 5%;
+}
+.btn{
+  margin-left: 40%;
+  width: 200px;
+}
+div.card{
+  display: inline-block;
+  
+}
+
